@@ -1,0 +1,90 @@
+export XDG_CONFIG_HOME=$HOME/.config
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+# Zsh history
+export HISTFILE="$ZDOTDIR/.zsh_history"
+export HISTSIZE=10000
+export SAVEHIST=10000
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY  # Add to history right after executing
+setopt SHARE_HISTORY  # Read history while executing commands
+setopt EXTENDED_HISTORY
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+
+# Directory stack
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+
+# Misc
+setopt AUTO_CD
+setopt EXTENDED_GLOB
+
+# Terminal tab title
+tab_title_precmd() {
+  print -Pn "\e]0;$(basename $(pwd))\a"
+}
+typeset -a precmd_functions
+precmd_functions+=(tab_title_precmd)
+
+VIM="nvim"
+
+
+source $HOME/fzf/key-bindings.zsh
+source $HOME/fzf/completion.zsh
+
+
+code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+
+# Includes
+source $ZDOTDIR/aliases.zsh
+source $ZDOTDIR/prompt.zsh
+source $ZDOTDIR/completion.zsh
+
+export PATH=$PATH:/opt/homebrew/bin
+
+# FZF
+BREW_PREFIX="$(brew --prefix)"
+source "$BREW_PREFIX/opt/fzf/shell/completion.zsh"
+source "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
+
+source $ZDOTDIR/.packages/zsh-z/zsh-z.plugin.zsh
+source $ZDOTDIR/.packages/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source $ZDOTDIR/.packages/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZDOTDIR/.packages/fzf-tab/fzf-tab.plugin.zsh
+source $ZDOTDIR/.packages/zsh-manydots-magic/manydots-magic
+
+export GOPATH=$HOME/go
+export GIT_EDITOR=$VIM
+export DENO_INSTALL="$HOME/.deno"
+export DOTFILES=$HOME/.dotfiles
+
+# Search history more nicely with up/down
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search
+bindkey "^[[B" down-line-or-beginning-search
+
+validateYaml() {
+    python -c 'import yaml,sys;yaml.safe_load(sys.stdin)' < $1
+}
+
+eslintify() {
+    cat $1 > /tmp/file_to_eslint
+    npx eslint
+}
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+function brew() {
+  command brew "$@" 
+
+  if [[ $* =~ "upgrade" ]] || [[ $* =~ "update" ]] || [[ $* =~ "outdated" ]]; then
+    sketchybar --trigger brew_update
+  fi
+}
+
+export PATH=$PATH:$ZDOTDIR/git
