@@ -1,7 +1,7 @@
 
 update() {
   source "$CONFIG_DIR/colors.sh"
-  COLOR=$BACKGROUND_2
+  COLOR=$DEFAULT
   if [ "$SELECTED" = "true" ]; then
     COLOR=$GREY
   fi

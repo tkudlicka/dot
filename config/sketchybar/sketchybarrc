@@ -7,7 +7,7 @@ source "$HOME/.config/sketchybar/icons.sh"
 ITEM_DIR="$HOME/.config/sketchybar/items"
 PLUGIN_DIR="$HOME/.config/sketchybar/plugins"
 
-FONT="0xProto Nerd Font"
+FONT="JetBrainsMono Nerd Font"
 PADDINGS=3 # All paddings use this value (icon, label, background)
 SPACE_CLICK_SCRIPT="yabai -m space --focus \$SID 2>/dev/null"
 
@@ -18,9 +18,9 @@ killall helper
 $CONFIG_DIR/helper/helper $HELPER > /dev/null 2>&1 &
 
 bar=(
-  height=45
+  height=35
   color=$BAR_COLOR
-  border_width=2
+  border_width=1
   border_color=$BAR_BORDER_COLOR
   shadow=off
   position=bottom
@@ -28,7 +28,7 @@ bar=(
   padding_right=10
   padding_left=10
   y_offset=0
-  margin=-2
+  margin=2
   topmost=window
 )
 
@@ -38,6 +38,8 @@ defaults=(
   updates=when_shown
   icon.font="$FONT:Regular:14.0"
   icon.color=$ICON_COLOR
+  icon.color=$ICON_COLOR
+  icon.highlight_color=$HIGHLIGHT
   icon.padding_left=$PADDINGS
   icon.padding_right=$PADDINGS
   label.font="$FONT:Regular:13.0"
@@ -46,14 +48,13 @@ defaults=(
   label.padding_right=$PADDINGS
   padding_right=$PADDINGS
   padding_left=$PADDINGS
-  background.height=26
-  background.corner_radius=9
-  background.border_width=2
-  popup.background.border_width=2
-  popup.background.corner_radius=9
+  background.height=20
+  background.corner_radius=5
+  popup.background.border_width=0
+  popup.background.corner_radius=5
   popup.background.border_color=$POPUP_BORDER_COLOR
   popup.background.color=$POPUP_BACKGROUND_COLOR
-  popup.blur_radius=20
+  popup.blur_radius=10
   popup.background.shadow.drawing=on
   scroll_texts=on
 )
@@ -61,16 +62,18 @@ defaults=(
 sketchybar --default "${defaults[@]}"
 
 # Left
-source "$ITEM_DIR/apple.sh"
+# source "$ITEM_DIR/apple.sh"
 source "$ITEM_DIR/spaces.sh"
-source "$ITEM_DIR/front_app.sh"
+# source "$ITEM_DIR/front_app.sh"
 
 # Center
 source "$ITEM_DIR/mode_indicator.sh"
 
 # Right
-source "$ITEM_DIR/brew.sh"
-source "$ITEM_DIR/github.sh"
+#source "$ITEM_DIR/brew.sh"
+#source "$ITEM_DIR/github.sh"
+#source "$ITEM_DIR/mail.sh"
+source "$ITEM_DIR/time.sh"
 source "$ITEM_DIR/spotify.sh"
 source "$ITEM_DIR/wifi.sh"
 source "$ITEM_DIR/battery.sh"

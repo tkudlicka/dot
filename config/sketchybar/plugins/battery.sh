@@ -12,7 +12,7 @@ if [ $PERCENTAGE = "" ]; then
 fi
 
 DRAWING=on
-COLOR=$WHITE
+COLOR=$DEFAULT
 case ${PERCENTAGE} in
   9[0-9]|100) ICON=$BATTERY_100; DRAWING=off
   ;;

@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 # shellcheck disable=all
 
-source "$HOME/.config/common/colors.sh"
+source "$HOME/.config/sketchybar/colors.sh"
 
 case "$1" in
 default)
   sketchybar  --bar           color=$BAR_COLOR                         \
               --set /space.*/ label.background.color=$BACKGROUND_2     \
-              --set /space.*/ icon.color=$WHITE                        \
-              --set /space.*/ label.color=$WHITE                       \
+              --set /space.*/ icon.color=$DEFAULT                      \
+              --set /space.*/ label.color=$DEFAULT                       \
               --set separator icon.color=$ORANGE                       \
               --trigger mode_changed                                   \
               --set mode_indicator label=""                            \
-              --set system.yabai label.color=$WHITE                    \
-              --set front_app label.color=$WHITE                       \
-              --set brew icon.color=$WHITE                             \
-              --set brew label.color=$WHITE                            \
+              --set system.yabai label.color=$DEFAULT                    \
+              --set front_app label.color=$DEFAULT                       \
+              --set brew icon.color=$DEFAULT                             \
+              --set brew label.color=$DEFAULT                            \
               --set mode_indicator drawing=off
   ;;
 stack)

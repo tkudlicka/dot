@@ -9,13 +9,12 @@ volume_slider=(
   slider.background.height=5
   slider.background.corner_radius=3
   slider.background.color=$BACKGROUND_2
-  slider.knob=􀀁
+  slider.knob=
   slider.knob.drawing=on
 )
 
-volume_icon=(
+volume_icon=( 
   click_script="$PLUGIN_DIR/volume_click.sh"
-  padding_left=10
   icon=$VOLUME_100
   icon.width=0
   icon.align=left
