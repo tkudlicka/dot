@@ -30,9 +30,9 @@ precmd_functions+=(tab_title_precmd)
 
 VIM="nvim"
 
-
-source $HOME/fzf/key-bindings.zsh
-source $HOME/fzf/completion.zsh
+BREW_PREFIX="$(brew --prefix)"
+#source $BREW_PREFIX/opt/fzf/shell/fzf/key-bindings.zsh
+#source $BREW_PREFIX/opt/fzf/shell/fzf/completion.zsh
 
 
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
@@ -54,8 +54,11 @@ source $ZDOTDIR/.packages/fast-syntax-highlighting/fast-syntax-highlighting.plug
 source $ZDOTDIR/.packages/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZDOTDIR/.packages/fzf-tab/fzf-tab.plugin.zsh
 source $ZDOTDIR/.packages/zsh-manydots-magic/manydots-magic
+source $ZDOTDIR/.packages/ohmyzsh/plugins/aliases/aliases.plugin.zsh
+source $ZDOTDIR/.packages/ohmyzsh/plugins/ansible/ansible.plugin.zsh
 
 export GOPATH=$HOME/go
+export $ZDOTDIR/new-worktree.sh
 export GIT_EDITOR=$VIM
 export DENO_INSTALL="$HOME/.deno"
 export DOTFILES=$HOME/.dotfiles
