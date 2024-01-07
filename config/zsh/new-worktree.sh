@@ -12,7 +12,9 @@ trap cleanup SIGINT SIGTERM ERR EXIT
 # shellcheck disable=SC2034
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
 
+echo "script_dir: $script_dir"
 usage() {
+    echo "usage"
   cat <<EOF
 Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-f] [-b] [-B] [-p] [-N] <path>
 
@@ -113,13 +115,12 @@ run_command() {
 parse_params() {
   # default values of variables set from params
   create_upstream=1
-  prefix="$(git config github.user)/"
-  base='origin/develop'
+  prefix="tkudlicka"
+  base='origin/master'
   branch=''
 
   while :; do
-    case "${1-}" in
-    -h | --help) usage ;;
+    case "${1-}" in (-h | --help) usage ;;
     -v | --verbose) set -x ;;
     --no-color) NO_COLOR=1 ;;
     -N | --no-create-upstream) create_upstream=0 ;;
