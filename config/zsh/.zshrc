@@ -1,15 +1,17 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-
+#export PATH=/usr/local/share/npm/bin:$PATH
 # Path to your oh-my-zsh installation.
- export ZSH="$HOME/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
+
+export PATH="/opt/homebrew/bin:$PATH"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
- ZSH_THEME="robbyrussell"
-
+ZSH_THEME="robbyrussell"
+autoload -U compinit && compinit
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -70,7 +72,9 @@
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
- source $ZSH/oh-my-zsh.sh
+export PATH=$(brew --prefix)/bin:$PATH
+plugins=(git z brew)
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
@@ -97,34 +101,50 @@
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source ~/.config/zsh/.zsh_profile
+source ~/dot/config/zsh/.zsh_profile
+
+#alias luamake=/home/tomaskudlicka/personal/lua-language-server/3rd/luamake/luamake
 
 # bun completions
- [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+#[ -s "/home/tomaskudlicka/.bun/_bun" ] && source "/home/tomaskudlicka/.bun/_bun"
 
 # Bun
-export BUN_INSTALL="/$HOME/.bun"
+export BUN_INSTALL="/home/tomaskudlicka/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+export PATH="/usr/local/opt/openjdk@11/bin:$PATH"
+
+export PATH="/opt/homebrew/opt/ruby@3.1/bin:$PATH"
+export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
+export ANDROID_HOME=$HOME/Library/Android/sdk
+
 # pnpm
-export PNPM_HOME="$HOME/.local/share/pnpm"
+export PNPM_HOME="/home/tomaskudlicka/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
 # pnpm end
+#
 # Turso
-export PATH="$HOME/.turso:$PATH"
+export PATH="/home/tomaskudlicka/.turso:$PATH"
+# nvm
+alias nvm='. ~/loadnvm.sh; nvm "$@"'
+alias npm='. ~/loadnvm.sh; npm "$@"'
+alias node='. ~/loadnvm.sh; node "$@"'
+# autoload -U +X bashcompinit && bashcompinit
+# complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/.local/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/home/tomaskudlicka/.local/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "$HOME/.local/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/.local/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/tomaskudlicka/.local/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/tomaskudlicka/.local/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="$HOME/.local/anaconda3/bin:$PATH"
+        export PATH="/home/tomaskudlicka/.local/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
- eval "$(op completion zsh)"; compdef _op op
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
