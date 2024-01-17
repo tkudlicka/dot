@@ -8,4 +8,4 @@ Always a WIP
 - [ ] fix dotfiles loading script - clone repo
 - [ ] neovim - refactor
 - [ ] configure ansible valut
-- [ ] 
+- [ ] fix installing cast in brew
