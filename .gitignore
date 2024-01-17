@@ -1,5 +1,6 @@
-nvim/.config/nvim/plugin/packer_compiled.lua
 .DS_Store
-config/zsh/.zcompdump*
-config/zsh/git/**
+zsh/.zcompdump*
+zsh/git/**
 .zsh_history
+.zcompdump
+.packages

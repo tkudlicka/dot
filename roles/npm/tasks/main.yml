@@ -1,0 +1,6 @@
+---
+    - name: NPM | Ensure NodeJS Modules directory exists
+      ansible.builtin.file:
+        path: /usr/local/lib/node_modules
+        state: directory
+        mode: "0755"

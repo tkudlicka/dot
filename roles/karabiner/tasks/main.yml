@@ -1,0 +1,8 @@
+---
+- name: "karabiner | Configure karabiner"
+  ansible.builtin.copy:
+    src: karabiner
+    dest: "{{ ansible_user_dir }}/.config/"
+    mode: 0644
+    directory_mode: 0755
+    force: true

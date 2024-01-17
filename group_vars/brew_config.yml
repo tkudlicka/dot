@@ -1,0 +1,38 @@
+---
+taps:
+  - homebrew/core
+  - caskroom/cask
+  - caskroom/versions
+  - caskroom/fonts
+packages:
+  - python
+  - vim
+  - zsh
+  - karabiner
+  - docker
+  - luarocks
+  - lua@5.1
+  - luajit
+  - git
+  - gh
+  - neovim
+  - glab
+  - wget
+  - cmake
+  - sketchybar
+  - lazygit
+  - skhd
+  - yabai
+  - gpg
+  - htop
+  - openssl
+  - zsh
+  - zsh-completions
+  - tmux
+  - nodejs
+  - zsh-syntax-highlighting
+  - jq
+  - watch
+  - lua
+  - rust
+  - pipenv

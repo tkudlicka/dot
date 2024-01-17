@@ -1,0 +1,13 @@
+---
+- name: "skhd | Configure skhd"
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ ansible_user_dir }}/.config/skhd"
+    state: directory
+
+- name: "skhd | Create symlink to role files directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/skhd"
+    state: link
+    force: true

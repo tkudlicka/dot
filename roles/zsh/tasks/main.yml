@@ -1,0 +1,51 @@
+---
+- name: "zsh | Config folder"
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ ansible_user_dir }}/.config/zsh"
+    state: directory
+
+- name: "zsh | Plugin folder"
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ ansible_user_dir }}/.config/zsh/.packages"
+    state: directory
+
+- name: "zsh | Create symlink to role files directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/zsh"
+    state: link
+    force: true
+
+- name: "zshrc | Create symlink to home directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/.zshrc"
+    dest: "{{ ansible_user_dir }}/.zshrc"
+    state: link
+    force: true
+
+- name: "Syntax highlighting | Clone Latest Version"
+  ansible.builtin.git:
+    repo: https://github.com/zdharma-continuum/fast-syntax-highlighting
+    dest: ~/.config/zsh/.packages/fast-syntax-highlighting
+
+- name: "Zsh autosuggestions | Clone Latest Version"
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: ~/.config/zsh/.packages/zsh-autosuggestions
+
+- name: "Fzf tab | Clone Latest Version"
+  ansible.builtin.git:
+    repo: https://github.com/Aloxaf/fzf-tab
+    dest: ~/.config/zsh/.packages/fzf-tab
+
+- name: "zsh-manydots-magic | Clone Latest Version"
+  ansible.builtin.git:
+    repo: https://github.com/knu/zsh-manydots-magic
+    dest: ~/.config/zsh/.packages/zsh-manydots-magic
+
+- name: "gitstatus | Clone Latest Version"
+  ansible.builtin.git:
+    repo: https://github.com/romkatv/gitstatus
+    dest: ~/.config/zsh/.packages/gitstatus

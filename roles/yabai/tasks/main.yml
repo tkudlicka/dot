@@ -1,0 +1,13 @@
+---
+- name: "yabai | Configure yabai"
+  ansible.builtin.file:
+    mode: "0755"
+    path: "{{ ansible_user_dir }}/.config/yabai"
+    state: directory
+
+- name: "yabai | Create symlink to role files directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/yabai"
+    state: link
+    force: true
