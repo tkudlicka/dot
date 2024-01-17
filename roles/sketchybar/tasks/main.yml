@@ -11,3 +11,5 @@
     dest: "{{ ansible_user_dir }}/.config/sketchybar"
     state: link
     force: true
+- name: Start sketchybar
+  command: brew services start sketchybar

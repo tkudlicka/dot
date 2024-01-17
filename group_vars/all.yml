@@ -11,6 +11,7 @@ default_roles:
   - yabai
   - tmux
   - zsh
+  - borders
   # - helm
   # - k8s 
   # - k9s

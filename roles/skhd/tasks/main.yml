@@ -11,3 +11,7 @@
     dest: "{{ ansible_user_dir }}/.config/skhd"
     state: link
     force: true
+
+- name: Start skhd
+  command: skhd --restart-service
+

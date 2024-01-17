@@ -31,9 +31,8 @@ dotfiles
 ```
 
 ## TBD
-- [ ] nerd font
-- [ ] fix readme - add bash
-- [ ] fix dotfiles loading script - clone repo
-- [ ] neovim - refactor
-- [ ] configure ansible valut
+- [ ] configure ansible valut?
+- [ ] add import mono nerd font
 - [ ] fix installing cast in brew
+- [ ] configure ansible valut?
+- [ ] neovim - refactor

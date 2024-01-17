@@ -66,23 +66,17 @@ display, stack, window, resize, reload < i ; inst
 # other application based keybindings e.g. VS Code, IntelliJ, etc.
 
 # toggle fullscreen inside screen
+ctrl - 1 : yabai -m display --focus $(yabai -m query --spaces --space 1 | jq .display); yabai -m space --focus 1
+ctrl - 2 : yabai -m display --focus $(yabai -m query --spaces --space 2 | jq .display); yabai -m space --focus 2
+ctrl - 3 : yabai -m display --focus $(yabai -m query --spaces --space 3 | jq .display); yabai -m space --focus 3
+ctrl - 4 : yabai -m display --focus $(yabai -m query --spaces --space 4 | jq .display); yabai -m space --focus 4
+ctrl - 5 : yabai -m display --focus $(yabai -m query --spaces --space 5 | jq .display); yabai -m space --focus 5
+ctrl - 6 : yabai -m display --focus $(yabai -m query --spaces --space 6 | jq .display); yabai -m space --focus 6
+ctrl - 7 : yabai -m display --focus $(yabai -m query --spaces --space 7 | jq .display); yabai -m space --focus 7
+ctrl - 8 : yabai -m display --focus $(yabai -m query --spaces --space 8 | jq .display); yabai -m space --focus 8
+ctrl - 9 : yabai -m display --focus $(yabai -m query --spaces --space 9 | jq .display); yabai -m space --focus 9
+
 ctrl + shift - space  : yabai -m window --toggle zoom-fullscreen; \
-                        sketchybar --trigger window_focus
-
-ctrl + shift - right  : yabai -m window --focus east || \
-                        yabai -m window --focus west; \
-                        sketchybar --trigger window_focus
-ctrl + shift - left   : yabai -m window --focus west || \
-                        yabai -m window --focus east; \
-                        sketchybar --trigger window_focus
-ctrl + shift - up     : yabai -m window --focus north || \
-                        yabai -m window --focus stack.prev || \
-                        yabai -m window --focus stack.last; \
-                        sketchybar --trigger window_focus
-
-ctrl + shift - down   : yabai -m window --focus south || \
-                        yabai -m window --focus stack.next || \
-                        yabai -m window --focus stack.first; \
                         sketchybar --trigger window_focus
 
 ctrl - down           : yabai -m window --focus mouse; \

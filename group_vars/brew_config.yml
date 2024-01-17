@@ -10,6 +10,7 @@ packages:
   - zsh
   - karabiner
   - docker
+  - borders
   - luarocks
   - lua@5.1
   - luajit

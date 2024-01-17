@@ -1,13 +1,33 @@
 ---
-- name: "tmux | Install TPM"
+- name: "Tmux | Install TPM"
   ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tpm
     dest: ~/.tmux/plugins/tpm
 
-- name: "tmux | Configure tmux"
-  ansible.builtin.copy:
-    src: tmux
-    dest: "{{ ansible_user_dir }}/.config/"
-    mode: 0644
-    directory_mode: 0755
+- name: "Tmux | Create symlink to role files directory"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files"
+    dest: "{{ ansible_user_dir }}/.config/tmux"
+    state: link
     force: true
+
+- name: "Tmux | Create symlink to .tmux.conf"
+  ansible.builtin.file:
+    src: "{{ role_path }}/files/tmux.conf"
+    dest: "{{ ansible_user_dir }}/.tmux.conf"
+    state: link
+    force: true
+
+- name: "Find all script files"
+  ansible.builtin.find:
+    paths: "{{ role_path }}/files/scripts"
+  register: find
+
+- name: "Create symlinks to ./local/bin"
+  become: true
+  ansible.builtin.file:
+    src: "{{ item.path }}"
+    path: "{{ ansible_user_dir }}/.local/bin/{{ item.path | basename }}"
+    state: link
+    force: true
+  with_items: "{{ find.files }}"
