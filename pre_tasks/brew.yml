@@ -1,0 +1,54 @@
+---
+- name: Include brew list
+  ansible.builtin.include_vars:
+    file: group_vars/brew_config.yml
+    name: brew
+  tags:
+    - brew
+
+- name: Include cask config
+  ansible.builtin.include_vars:
+    file: group_vars/cask_config.yml
+    name: cask
+  tags:
+    - cask
+
+- name: Check If Homebrew is Installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/brew
+  register: is_brew_installed
+  tags:
+    - init
+
+- name: Install Homebrew
+  ansible.builtin.shell: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  when: is_brew_installed.stat.exists == False
+  tags:
+    - init
+
+- name: Update Homebrew
+  community.general.homebrew:
+    update_homebrew: true
+  tags:
+    - update_cache
+
+- name: Get list of Installed Brew packages
+  ansible.builtin.command: brew list
+  register: brew_list
+  tags:
+    - brew
+
+- name: Install brew packages
+  community.general.homebrew:
+    name: ["{{ item }}"]
+    state: present
+  with_items: "{{ brew.packages }}"
+  when: brew_list.stdout.find(item) == -1
+  tags:
+    - brew
+
+- name: Get list of Installed Cask packages
+  ansible.builtin.command: brew list --cask
+  register: cask_list
+  tags:
+    - cask

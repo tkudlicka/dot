@@ -4,5 +4,8 @@ Always a WIP
 
 ## TBD
 - [ ] nerd font
-- [ ] install script
-- [ ] ci autolint md
+- [ ] fix readme - add bash
+- [ ] fix dotfiles loading script - clone repo
+- [ ] neovim - refactor
+- [ ] configure ansible valut
+- [ ] 
