@@ -104,6 +104,15 @@ if [[ $(command -v ansible) == "" ]]; then
         _cmd "activate-global-python-argcomplete3"
 fi
 
+# Clone repository
+if ! [[ -d "$DOTFILES_DIR" ]]; then
+    _task "Cloning repository"
+        _cmd "git clone --quiet https://github.com/tkudlicka/dot.git $DOTFILES_DIR"
+else
+    _task "Updating repository"
+        _cmd "git -C $DOTFILES_DIR pull --quiet"
+fi
+
 # Check if python3 and pip is installed
 if ! which -s python3 >/dev/null 2>&1; then
     _task "Installing Python3"
@@ -115,25 +124,6 @@ if ! pip3 list | grep watchdog >/dev/null 2>&1; then
     _task "Installing Python3 Watchdog"
         _cmd "pip3 install watchdog"
 fi
-
-# # Generate SSH keys
-# if ! [[ -f "$SSH_DIR/authorized_keys" ]]; then
-#     echo "authorized_keys not found"
-#     _task "Generating SSH keys"
-#         _cmd "mkdir -p $SSH_DIR"
-#         _cmd "chmod 700 $SSH_DIR"
-#         _cmd "ssh-keygen -b 4096 -t rsa -f $SSH_DIR/id_rsa -N '' -C $USER@$HOSTNAME"
-#         _cmd "cat $SSH_DIR/id_rsa.pub >> $SSH_DIR/authorized_keys"
-# fi
-#
-# Clone repository
-# if ! [[ -d "$DOTFILES_DIR" ]]; then
-#     _task "Cloning repository"
-#         _cmd "git clone --quiet https://github.com/TechDufus/dotfiles.git $DOTFILES_DIR"
-# else
-#     _task "Updating repository"
-#         _cmd "git -C $DOTFILES_DIR pull --quiet"
-# fi
 
 pushd "$DOTFILES_DIR" 2>&1 > /dev/null
 _task "Updating Galaxy"
