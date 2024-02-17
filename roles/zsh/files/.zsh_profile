@@ -21,21 +21,17 @@ setopt PUSHD_SILENT
 setopt AUTO_CD
 setopt EXTENDED_GLOB
 
-# Terminal tab title
-tab_title_precmd() {
-  print -Pn "\e]0;$(basename $(pwd))\a"
-}
 typeset -a precmd_functions
 precmd_functions+=(tab_title_precmd)
 
 VIM="nvim"
 
 BREW_PREFIX="$(brew --prefix)"
-#source $BREW_PREFIX/opt/fzf/shell/fzf/key-bindings.zsh
-#source $BREW_PREFIX/opt/fzf/shell/fzf/completion.zsh
+# source $BREW_PREFIX/opt/fzf/shell/fzf/key-bindings.zsh
+# source $BREW_PREFIX/opt/fzf/shell/fzf/completion.zsh
 
 
-code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+c () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
 # Includes
 source $ZDOTDIR/aliases.zsh
@@ -46,8 +42,8 @@ export PATH=$PATH:/opt/homebrew/bin
 
 # FZF
 BREW_PREFIX="$(brew --prefix)"
-# source "$BREW_PREFIX/opt/fzf/shell/completion.zsh"
-# source "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
+source "$BREW_PREFIX/opt/fzf/shell/completion.zsh"
+source "$BREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
 
 source $ZDOTDIR/.packages/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source $ZDOTDIR/.packages/zsh-autosuggestions/zsh-autosuggestions.zsh
@@ -67,18 +63,6 @@ zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search
 bindkey "^[[B" down-line-or-beginning-search
 
-validateYaml() {
-    python -c 'import yaml,sys;yaml.safe_load(sys.stdin)' < $1
-}
-
-eslintify() {
-    cat $1 > /tmp/file_to_eslint
-    npx eslint
-}
-
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
 function brew() {
   command brew "$@" 
 
@@ -88,3 +72,4 @@ function brew() {
 }
 
 export PATH=$PATH:$ZDOTDIR/git
+export PATH=$PATH:$HOME/go/bin

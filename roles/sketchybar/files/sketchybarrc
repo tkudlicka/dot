@@ -70,7 +70,6 @@ source "$ITEM_DIR/spaces.sh"
 source "$ITEM_DIR/mode_indicator.sh"
 
 # Right
-#source "$ITEM_DIR/brew.sh"
 #source "$ITEM_DIR/github.sh"
 #source "$ITEM_DIR/mail.sh"
 source "$ITEM_DIR/time.sh"

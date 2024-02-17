@@ -64,18 +64,6 @@ display, stack, window, resize, reload < i ; inst
 ############################# Global modifiers ##################################
 # The aim is to not have too many global key-bindings because it will clash with
 # other application based keybindings e.g. VS Code, IntelliJ, etc.
-
-# toggle fullscreen inside screen
-ctrl - 1 : yabai -m display --focus $(yabai -m query --spaces --space 1 | jq .display); yabai -m space --focus 1
-ctrl - 2 : yabai -m display --focus $(yabai -m query --spaces --space 2 | jq .display); yabai -m space --focus 2
-ctrl - 3 : yabai -m display --focus $(yabai -m query --spaces --space 3 | jq .display); yabai -m space --focus 3
-ctrl - 4 : yabai -m display --focus $(yabai -m query --spaces --space 4 | jq .display); yabai -m space --focus 4
-ctrl - 5 : yabai -m display --focus $(yabai -m query --spaces --space 5 | jq .display); yabai -m space --focus 5
-ctrl - 6 : yabai -m display --focus $(yabai -m query --spaces --space 6 | jq .display); yabai -m space --focus 6
-ctrl - 7 : yabai -m display --focus $(yabai -m query --spaces --space 7 | jq .display); yabai -m space --focus 7
-ctrl - 8 : yabai -m display --focus $(yabai -m query --spaces --space 8 | jq .display); yabai -m space --focus 8
-ctrl - 9 : yabai -m display --focus $(yabai -m query --spaces --space 9 | jq .display); yabai -m space --focus 9
-
 ctrl + shift - space  : yabai -m window --toggle zoom-fullscreen; \
                         sketchybar --trigger window_focus
 
@@ -83,10 +71,10 @@ ctrl - down           : yabai -m window --focus mouse; \
                         sketchybar --trigger window_focus
 
 # vi like key bindings
-ctrl + shift - l      : skhd -k "ctrl + shift - right"
-ctrl + shift - h      : skhd -k "ctrl + shift - left"
-ctrl + shift - k      : skhd -k "ctrl + shift - up"
-ctrl + shift - j      : skhd -k "ctrl + shift - down"
+ctrl + shift - h        : yabai -m window --focus west
+ctrl + shift - j       : yabai -m window --focus south
+ctrl + shift - k        : yabai -m window --focus north
+ctrl + shift - l        : yabai -m window --focus east
 
 # toggle window native fullscreen
 ctrl + shift - f      : yabai -m window --toggle native-fullscreen

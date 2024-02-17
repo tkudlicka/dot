@@ -14,25 +14,23 @@ return {
                 if vim.bo.ft ~= "fugitive" then
                     return
                 end
-        
-                local bufnr = vim.api.nvim_get_current_buf()
-                local opts = {buffer = bufnr, remap = false}
-                vim.keymap.set("n", "<leader>p", function()
-                    vim.cmd.Git('push')
-                end, opts)
-        
-                -- rebase always
-                vim.keymap.set("n", "<leader>P", function()
-                    vim.cmd.Git({'pull',  '--rebase'})
-                end, opts)
-        
-                -- NOTE: It allows me to easily set the branch i am pushing and any tracking
-                -- needed if i did not set the branch up correctly
-                vim.keymap.set("n", "<leader>t", ":Git push -u origin ", opts);
             end,
         })
-       
         vim.keymap.set("n","gu","<cmd>diffget //2<CR>")
         vim.keymap.set("n","gh","<cmd>diffget //3<CR>")
+        vim.keymap.set("n","<leader>gc","<cmd>G commit -v -q<CR>")
+        vim.keymap.set("n","<leader>ga","<cmd>G commit --amend<CR>")
+        vim.keymap.set("n","<leader>gt","<cmd>G commit -v -q %<CR>")
+        vim.keymap.set("n","<leader>gd","<cmd>Gdiff<CR>")
+        vim.keymap.set("n","<leader>ge","<cmd>Gedit<CR>")
+        vim.keymap.set("n","<leader>gr","<cmd>Gread<CR>")
+        vim.keymap.set("n","<leader>gw","<cmd>Gwrite<CR><CR>")
+        vim.keymap.set("n","<leader>gl","<cmd>G log<CR>")
+        vim.keymap.set("n","<leader>gp","<cmd>G grep<Space><CR>")
+        vim.keymap.set("n","<leader>gm","<cmd>G move<Space><CR>")
+        vim.keymap.set("n","<leader>gb","<cmd>G branch<Space><CR>")
+        vim.keymap.set("n","<leader>go","<cmd>G checkout<Space><CR>")
+        vim.keymap.set("n","<leader>gps","<cmd>Dispatch! git push<CR>")
+        vim.keymap.set("n","<leader>gpl","<cmd>Dispatch! git pull<CR>")
     end
 }

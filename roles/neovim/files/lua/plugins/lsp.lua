@@ -40,6 +40,9 @@ return {
                 "lua_ls",
                 "rust_analyzer",
                 "tsserver",
+                "templ",
+                "html",
+                "htmx",
             },
             handlers = {
                 function(server_name)
@@ -68,9 +71,21 @@ return {
                             }
                         }
                     }
-                end
+                end,
+                ["htmx"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.htmx.setup {
+                        filetypes = { "templ","html" },
+                        capabilities = capabilities,
+                    }
+                    lspconfig.html.setup {
+                        filetypes = { "templ","html" },
+                        capabilities = capabilities,
+                    }
+                end,
             }
         })
+
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('UserLspConfig', {}),
             callback = function(ev)
