@@ -1,5 +1,3 @@
-# My custom, minimal prompt
-
 # Options
 setopt PROMPT_SUBST NO_PROMPT_BANG PROMPT_PERCENT
 

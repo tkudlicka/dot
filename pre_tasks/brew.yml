@@ -6,13 +6,6 @@
   tags:
     - brew
 
-- name: Include cask config
-  ansible.builtin.include_vars:
-    file: group_vars/cask_config.yml
-    name: cask
-  tags:
-    - cask
-
 - name: Check If Homebrew is Installed
   ansible.builtin.stat:
     path: /usr/local/bin/brew
@@ -46,9 +39,3 @@
   when: brew_list.stdout.find(item) == -1
   tags:
     - brew
-
-- name: Get list of Installed Cask packages
-  ansible.builtin.command: brew list --cask
-  register: cask_list
-  tags:
-    - cask

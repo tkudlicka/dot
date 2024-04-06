@@ -4,10 +4,3 @@
   register: rocks
   changed_when: false
   check_mode: false
-
-# - name: Lua | Install Lua modules
-#   ansible.builtin.command:
-#     cmd: luarocks install {{ item }} --lacal
-#   loop:
-#     - luabitop
-#   when: item not in rocks.stdout

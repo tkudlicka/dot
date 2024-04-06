@@ -19,20 +19,6 @@ If you want to run only a specific role, you can specify the following bash comm
 curl -fsSL https://raw.githubusercontent.com/tkudlicka/dot/main/bin/dotfiles | bash -s -- --tags comma,seperated,tags
 ```
 
-
-### Update
-
-This repository is continuously updated with new features and settings which become available to you when updating.
-
-To update your environment run the `dotfiles` command in your shell:
-
 ```bash
 dotfiles
 ```
-
-## TBD
-- [ ] configure ansible valut?
-- [ ] add import mono nerd font
-- [ ] fix installing cast in brew
-- [ ] configure ansible valut?
-- [ ] neovim - refactor

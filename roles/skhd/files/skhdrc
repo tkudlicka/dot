@@ -8,32 +8,23 @@
 # SC2171: Found trailing ] outside test. Add missing [ or quote if intentional.
 # SC2288: This is interpreted as a command name ending with apostrophe. Double check syntax.
 
-# This will fail until you run the post_yabai_installation script
-.load "sip_skhdrc"
-
 ############################# Mode definitions ##################################
 :: default           : ~/.config/skhd/mode_controller.sh default # default mode: normal
-:: stack   @         : ~/.config/skhd/mode_controller.sh stack # stack mode: interact with stacks
-:: display @         : ~/.config/skhd/mode_controller.sh display # display mode: focus displays, move windows to other displays
 :: window  @         : ~/.config/skhd/mode_controller.sh window # window mode: manipulate windows and spaces
 :: resize  @         : ~/.config/skhd/mode_controller.sh resize # resize mode: resize windows in current space
-:: inst    @         : ~/.config/skhd/mode_controller.sh inst # insert mode: tell yabai where to insert the new window
 :: reload  @         : ~/.config/skhd/mode_controller.sh reload # reload mode: restart services
 
 # Activate modes using the keybinding
-default < alt - d ; display
-default < alt - s ; stack
 default < alt - w ; window
-default < alt - i ; inst
+default < alt - r ; resize
 default < alt - x ; reload
 
 # De-activate modes
-display, window, resize, stack, inst, reload < escape ; default
+ window, resize, reload < escape ; default
 
 display < alt - d ; default
-stack   < alt - s ; default
 window  < alt - w ; default
-inst    < alt - i ; default
+resize    < alt - r ; default
 reload  < alt - x ; default
 
 # fast focus desktop
@@ -49,11 +40,9 @@ alt - 0x19 : yabai -m space --focus  9
 alt - 0x1D : yabai -m space --focus 10 
 # Launch other modes from within a mode
 # display, stack, window, resize, inst, reload
-stack, window, resize, inst, reload    < d ; display
 display, window, resize, inst, reload  < s ; stack
 display, stack, resize, inst, reload   < w ; window
 display, stack, window, inst, reload   < r ; resize
-display, stack, window, resize, reload < i ; inst
 
 ############################# Global modifiers ##################################
 # The aim is to not have too many global key-bindings because it will clash with
@@ -70,75 +59,14 @@ alt - l        : yabai -m window --focus east
 # toggle window native fullscreen
 alt - f      : yabai -m window --toggle native-fullscreen
 
-# Restart all services
-ctrl + alt + cmd - r : yabai --restart-service; \
-                       launchctl kickstart -k "gui/${UID}/homebrew.mxcl.sketchybar"; \
-                       skhd --restart-service
-
 # Open Terminal
-alt - 0x24  : open -na /Applications/Alacritty.app
-
-# Close a window. Not the same as quit
-alt - q     : yabai -m window --close
-
-# Focus window under mouse
-alt - m              : yabai -m window --focus mouse
+alt - 0x24  : open -na /Applications/Kitty.app
 
 # Toggle zen mode. zooms focused window, removes all margins
 # and hides status bar
 alt - z      : ~/.config/skhd/toggle_zen_mode.sh; \
                         skhd -k 'escape'
 
-
-######################## Insert mode ###########################################
-
-inst < left            : yabai -m window --insert west; skhd -k 'escape'
-inst < down            : yabai -m window --insert south; skhd -k 'escape'
-inst < up              : yabai -m window --insert north; skhd -k 'escape'
-inst < right           : yabai -m window --insert east; skhd -k 'escape'
-inst < s               : yabai -m window --insert stack; skhd -k 'escape'
-
-######################## Stack mode ############################################
-
-# Add the active window  to the window or stack to the {direction}
-# Note that this only works when the active window does *not* already belong to a stack
-stack < left           : yabai -m window west  \
-                         --stack "$(yabai -m query --windows --window | jq -r '.id')"; \
-                         skhd -k 'escape'
-
-stack < down           : yabai -m window south \
-                         --stack "$(yabai -m query --windows --window | jq -r '.id')" ; \
-                         skhd -k 'escape'
-
-stack < up             : yabai -m window north \
-                         --stack "$(yabai -m query --windows --window | jq -r '.id')" ; \
-                         skhd -k 'escape'
-
-stack < right          : yabai -m window east  \
-                         --stack "$(yabai -m query --windows --window | jq -r '.id')"; \
-                         skhd -k 'escape'
-
-# Toggle current space layout between stack and bsp
-stack < space          : yabai -m query --spaces --space | \
-                         jq -re ".type" | \
-                         xargs -I {} bash -c \
-                         "if [ {} = 'stack' ]; \
-                         then yabai -m space --layout bsp; \
-                         else yabai -m space --layout stack; \
-                         fi"; \
-                         skhd -k 'escape'
-
-# Remove the current window from the stack. Only works if the space layout is bsp
-stack < b              : window="$(yabai -m query --windows --window | jq -r '.id')"; \
-                         yabai -m window east --stack $window || \
-                         (yabai -m window $window --toggle float && yabai -m window $window --toggle float); \
-                         skhd -k 'escape'
-
-# Stack all windows in the currect space on top of the current window while keeping the current space layout in bsp
-stack < s              : window="$(yabai -m query --windows --window | jq -r '.id')" && \
-                         yabai -m query --windows --space | jq -rc --arg w "$window" '[.[].id] | map(select(. != $w)) | .[]' | \
-                         xargs -I {} yabai -m window "$window" --stack {}; \
-                         skhd -k 'escape'
 
 ####################### Resize mode ############################################
 
@@ -194,45 +122,6 @@ resize < z             : yabai -m query --windows --space | \
 resize < s              : yabai -m window mouse --swap recent; \
                           skhd -k 'escape'; \
 
-
-############################ Display mode ######################################
-
-# Focus previous display , (Like <)
-display < 0x2F         : yabai -m display --focus prev || \
-                         yabai -m display --focus next; \
-                         sketchybar --trigger windows_on_spaces; \
-                         skhd -k 'escape'
-
-# Focus next display . (Like >)
-display < 0x2B         : yabai -m display --focus next || \
-                         yabai -m display --focus prev; \
-                         sketchybar --trigger windows_on_spaces; \
-                         skhd -k 'escape'
-
-# Send window to north/up display and follow focus
-display < up           : yabai -m window --display north; \
-                         yabai -m display --focus north; \
-                         sketchybar --trigger windows_on_spaces; \
-                         skhd -k 'escape'
-
-# Send window to down/south display and follow focus
-display < down         : yabai -m window --display south; \
-                         yabai -m display --focus south; \
-                         sketchybar --trigger windows_on_spaces; \
-                         skhd -k 'escape'
-
-# Send window to right/east display and follow focus
-display < right        : yabai -m window --display east; \
-                         yabai -m display --focus east; \
-                         sketchybar --trigger windows_on_spaces; \
-                         skhd -k 'escape'
-
-# Send window to left/west display and follow focus
-display < left         : yabai -m window --display west; \
-                         yabai -m display --focus west; \
-                         sketchybar --trigger windows_on_spaces; \
-                         skhd -k 'escape'
-
 ##################### Window mode ##############################################
 
 # create desktop, send window to new desktop and follow focus
@@ -252,16 +141,6 @@ window < x            : index="$(yabai -m query --spaces --space | jq '.index - 
 
 # toggle window native fullscreen
 window < f            : yabai -m window --toggle native-fullscreen; skhd -k 'escape'
-
-# send current window to i-th space and follow focus* (* requires SIP disabled)
-window < left         : yabai -m window --space prev; \
-                        yabai -m space --focus prev; \
-                        sketchybar --trigger windows_on_spaces; \
-                        skhd -k 'escape'
-window < right        : yabai -m window --space next; \
-                        yabai -m space --focus next; \
-                        sketchybar --trigger windows_on_spaces; \
-                        skhd -k 'escape'
 
 # change position of window on the current space
 window < h            : yabai -m window --warp west; \

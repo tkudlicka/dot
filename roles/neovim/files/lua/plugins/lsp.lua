@@ -109,11 +109,11 @@ end
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
-        "williambboman/mason.nvim",
+        "williamboman/mason.nvim",
         'yioneko/nvim-vtsls' ,
         'folke/neodev.nvim' ,
         'stevearc/conform.nvim' ,
-        "williambboman/mason-lspconfig.nvim",
+        "williamboman/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
