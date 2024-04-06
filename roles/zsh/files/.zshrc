@@ -7,7 +7,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export PATH="/opt/homebrew/bin:$PATH"
 
 export PATH=$(brew --prefix)/bin:$PATH
-plugins=(git z brew 1password aliases ansible shrink-path)
+plugins=(git z brew 1password aliases ansible)
 source $ZSH/oh-my-zsh.sh
 source ~/.config/zsh/.zsh_profile
 # pnpm
@@ -34,5 +34,3 @@ export PATH="$PNPM_HOME:$PATH"
 #   fi
 # }
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/homebrew/bin/terraform terraform

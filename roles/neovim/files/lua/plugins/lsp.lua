@@ -1,7 +1,118 @@
+local diagnostic_ns = vim.api.nvim_create_namespace('lsp_diagnostics')
+local lsp_group = vim.api.nvim_create_augroup('vimrc_lsp', { clear = true })
+
+local diagnostic_icons = {
+  [vim.diagnostic.severity.ERROR] = ' ',
+  [vim.diagnostic.severity.WARN] = ' ',
+  [vim.diagnostic.severity.INFO] = ' ',
+  [vim.diagnostic.severity.HINT] = ' ',
+}
+
+
+local setup = {}
+
+function setup.configure_handlers()
+  vim.diagnostic.config({
+    virtual_text = false,
+    signs = {
+      text = diagnostic_icons,
+    },
+  })
+
+  vim.lsp.handlers['textDocument/hover'] =
+    vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded', focusable = false })
+
+  vim.lsp.handlers['textDocument/signatureHelp'] =
+    vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single', focusable = false, silent = true })
+end
+
+local function show_diagnostics()
+  vim.schedule(function()
+    local line = vim.api.nvim_win_get_cursor(0)[1] - 1
+    local bufnr = vim.api.nvim_get_current_buf()
+    local diagnostics = vim.diagnostic.get(bufnr, { lnum = line })
+
+    local virtual_text_opts = {
+      prefix = function(diagnostic)
+        return diagnostic_icons[diagnostic.severity]
+      end or '',
+    }
+
+    if vim.fn.has('nvim-0.10.0') == 0 then
+      virtual_text_opts = {
+        prefix = '',
+        format = function(diagnostic)
+          return string.format('%s %s', diagnostic_icons[diagnostic.severity], diagnostic.message)
+        end,
+      }
+    end
+
+    vim.diagnostic.show(diagnostic_ns, bufnr, diagnostics, {
+      virtual_text = virtual_text_opts,
+      severity_sort = true,
+    })
+  end)
+end
+
+local function refresh_diagnostics()
+  vim.diagnostic.setloclist({ open = false })
+  show_diagnostics()
+  if vim.tbl_isempty(vim.fn.getloclist(0)) then
+    vim.cmd.lclose()
+  end
+end
+
+function setup.attach_to_buffer(client, bufnr)
+  vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+    buffer = bufnr,
+    callback = show_diagnostics,
+    group = lsp_group,
+  })
+  vim.api.nvim_create_autocmd('DiagnosticChanged', {
+    buffer = bufnr,
+    callback = refresh_diagnostics,
+    group = lsp_group,
+  })
+  if not vim.tbl_isempty(client.server_capabilities.signatureHelpProvider or {}) then
+    vim.api.nvim_create_autocmd('CursorHoldI', {
+      buffer = bufnr,
+      callback = function()
+        vim.defer_fn(function()
+          vim.lsp.buf.signature_help()
+        end, 500)
+      end,
+      group = lsp_group,
+    })
+  end
+  vim.opt.foldmethod = 'expr'
+  vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+  setup.mappings()
+end
+
+
+  local function lsp_setup(opts)
+    opts = opts or {}
+    return vim.tbl_deep_extend('force', {
+      on_attach = function(client, bufnr)
+        client.server_capabilities.semanticTokensProvider = nil
+        if client.server_capabilities.documentSymbolProvider then
+          require('nvim-navic').attach(client, bufnr)
+        end
+        setup.attach_to_buffer(client, bufnr)
+        if opts.disableFormatting then
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+        end
+      end,
+    }, opts or {})
+  end
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
         "williambboman/mason.nvim",
+        'yioneko/nvim-vtsls' ,
+        'folke/neodev.nvim' ,
+        'stevearc/conform.nvim' ,
         "williambboman/mason-lspconfig.nvim",
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
@@ -39,8 +150,8 @@ return {
             ensure_insalled = {
                 "lua_ls",
                 "rust_analyzer",
-                "tsserver",
                 "templ",
+                "vtsls",
                 "html",
                 "htmx",
             },
@@ -49,6 +160,44 @@ return {
                     require("lspconfig")[server_name].setup {
                         capabilities = capabilities
                     }
+                end,
+                ['vtsls'] = function()
+                    local vtsls_settings = {
+                        preferences = {
+                            quoteStyle = 'single',
+                            importModuleSpecifier = 'relative',
+                        },
+                        inlayHints = {
+                            parameterNames = { enabled = 'literals' },
+                            parameterTypes = { enabled = true },
+                            variableTypes = { enabled = true },
+                            propertyDeclarationTypes = { enabled = true },
+                            functionLikeReturnTypes = { enabled = true },
+                            enumMemberValues = { enabled = true },
+                        },
+                        tsserver = {
+                            experimental = {
+                                    enableProjectDiagnostics = true,
+                                },
+
+                        },
+                    }
+                    local lspconfig = require("lspconfig")
+                    lspconfig.vtsls.setup(lsp_setup({
+                        settings = {
+                            javascript = vtsls_settings,
+                            typescript = vtsls_settings,
+                            vtsls = {
+                                experimental = {
+                                    enableProjectDiagnostics = true,
+                                    completion = {
+                                        enableServerSideFuzzyMatch = true,
+                                    },
+                                },
+                            },
+                        },
+                        disableFormatting = true,
+                    }))
                 end,
                 ['sqls'] = function() 
                     require('lspconfig').sqls.setup{
