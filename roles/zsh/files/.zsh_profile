@@ -24,14 +24,12 @@ setopt EXTENDED_GLOB
 typeset -a precmd_functions
 precmd_functions+=(tab_title_precmd)
 
+# Manually set your language environment
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 VIM="nvim"
 
 BREW_PREFIX="$(brew --prefix)"
-# source $BREW_PREFIX/opt/fzf/shell/fzf/key-bindings.zsh
-# source $BREW_PREFIX/opt/fzf/shell/fzf/completion.zsh
-
-
-c () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
 
 # Includes
 source $ZDOTDIR/aliases.zsh
@@ -64,7 +62,7 @@ bindkey "^[[A" up-line-or-beginning-search
 bindkey "^[[B" down-line-or-beginning-search
 
 function brew() {
-  command brew "$@" 
+  command brew "$@"
 
   if [[ $* =~ "upgrade" ]] || [[ $* =~ "update" ]] || [[ $* =~ "outdated" ]]; then
     sketchybar --trigger brew_update

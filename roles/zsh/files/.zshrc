@@ -1,8 +1,23 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-#export PATH=/usr/local/share/npm/bin:$PATH
-# Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+
+# History file configuration
+[ -z "$HISTFILE" ] && HISTFILE="$HOME/.zhistory"
+HISTSIZE=100000
+SAVEHIST=50000
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
+setopt SHARE_HISTORY
+
+# Alias nvim
+if command -v nvim >/dev/null 2>&1; then
+  alias vim=nvim
+  alias vimdiff='nvim -d'
+fi
 
 export PATH="/opt/homebrew/bin:$PATH"
 
@@ -13,24 +28,9 @@ source ~/.config/zsh/.zsh_profile
 # pnpm
 export PNPM_HOME="/home/tomaskudlicka/.local/share/pnpm"
 export PATH="$PNPM_HOME:$PATH"
-# pnpm end
-#
-# nvm
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use
-# NODE_DEFAULT_PATH="${NVM_DIR}/versions/default/bin"
-# PATH="${NODE_DEFAULT_PATH}:${PATH}"
-# switchNode() {
-#   local NODE_PATH TARGET_NODE_VERSION
-#   if [ -f '.nvmrc' ]; then
-#     TARGET_NODE_VERSION="$(nvm version $(cat .nvmrc))"
-#     NODE_PATH="${NVM_DIR}/versions/node/${TARGET_NODE_VERSION}/bin"
-#   else
-#     TARGET_NODE_VERSION="$(nvm version default)"
-#     NODE_PATH="${NODE_DEFAULT_PATH}"
-#   fi
-#   if [ "${TARGET_NODE_VERSION}" != "$(nvm current)" ]; then
-#     PATH="${NODE_PATH}:${PATH}"
-#   fi
-# }
+# Set git alias prefix
+zstyle ':zim:git' aliases-prefix g
+
+# Enable colors for ls
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
