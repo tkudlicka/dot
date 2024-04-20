@@ -72,7 +72,7 @@ local custom_attach = function(client, bufnr)
   buf_nnoremap { "<space>lr", "<cmd>lua require('tk.lsp.codelens').run()<CR>" }
   buf_nnoremap { "<space>rr", "LspRestart" }
 
-  buf_nnoremap {"gr", vim.lsp.buf.references, }
+  buf_nnoremap { "gr", vim.lsp.buf.references, }
   -- telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
   -- telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
 
@@ -128,7 +128,6 @@ local servers = {
   vimls = true,
   yamlls = true,
   ocamllsp = {
-    -- cmd = { "/home/tjdevries/git/ocaml-lsp/_build/default/ocaml-lsp-server/bin/main.exe" },
     settings = {
       codelens = { enable = true },
     },
@@ -140,22 +139,7 @@ local servers = {
 
   clojure_lsp = true,
 
-  -- Enable jsonls with json schemas
-  jsonls = {
-    settings = {
-      json = {
-        schemas = require("schemastore").json.schemas(),
-        validate = { enable = true },
-      },
-    },
-  },
-
-  -- TODO: Test the other Ruby LSPs?
-  -- solargraph = { cmd = { "bundle", "exec", "solargraph", "stdio" } },
-  -- sorbet = true,
-
   cmake = (1 == vim.fn.executable "cmake-language-server"),
-  dartls = pcall(require, "flutter-tools"),
 
   svelte = true,
   gopls = {
@@ -216,7 +200,7 @@ end
 
 require("mason").setup()
 require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "jsonls" },
+  ensure_installed = { "lua_ls" },
 }
 
 local setup_server = function(server, config)
