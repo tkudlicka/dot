@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.api.nvim_set_option("clipboard","unnamed")
+vim.api.nvim_set_option("clipboard", "unnamed")
 -- Commenting
 -- Map save to Ctrl + S
 vim.keymap.set('', '<c-s>', ':w<CR>', { remap = true, silent = true })
@@ -7,7 +7,6 @@ vim.keymap.set('i', '<c-s>', '<C-o>:w<CR>', { remap = true, silent = true })
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set('n', '<Leader>c', 'gcc', { remap = true })
 vim.keymap.set('v', '<Leader>c', 'gc', { remap = true })
-
 -- Stay on same position when searching word under cursor
 vim.keymap.set('n', '*', '*N')
 vim.keymap.set('n', '#', '#N')
@@ -37,17 +36,16 @@ vim.keymap.set("x", "<leader>c", "")
 vim.keymap.set("x", "<leader>p", [["_dp]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/.local/bin/tmux-sessionizer<CR>")
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
@@ -58,7 +56,7 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 vim.keymap.set("n", "<leader><leader>", function()
-    vim.cmd("so")
+  vim.cmd("so")
 end)
 local mappings = {}
 vim.keymap.set('n', '<leader>T', function()

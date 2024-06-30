@@ -1,22 +1,22 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  version = false, -- last release is way too old and doesn't work on Windows
-  build = ":TSUpdate",
-  event = {  "VeryLazy" },
-  init = function(plugin)
-    require("lazy.core.loader").add_to_rtp(plugin)
-    require("nvim-treesitter.query_predicates")
-  end,
-  dependencies = {
-    {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-      "nvim-treesitter/nvim-treesitter-context",
+    "nvim-treesitter/nvim-treesitter",
+    version = false, -- last release is way too old and doesn't work on Windows
+    build = ":TSUpdate",
+    event = { "VeryLazy" },
+    init = function(plugin)
+        require("lazy.core.loader").add_to_rtp(plugin)
+        require("nvim-treesitter.query_predicates")
+    end,
+    dependencies = {
+        {
+            "nvim-treesitter/nvim-treesitter-textobjects",
+            "nvim-treesitter/nvim-treesitter-context",
+        },
     },
-  },
     cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
     keys = {
         { "<c-space>", desc = "Increment selection" },
-        { "<bs>", desc = "Decrement selection", mode = "x" },
+        { "<bs>",      desc = "Decrement selection", mode = "x" },
     },
     ---@type TSConfig
     ---@diagnostic disable-next-line: missing-fields
