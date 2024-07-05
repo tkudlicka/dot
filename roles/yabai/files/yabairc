@@ -6,7 +6,7 @@
 # yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # global settings
-yabai -m config debug_output off
+yabai -m config debug_output on
 yabai -m config mouse_follows_focus on
 yabai -m config focus_follows_mouse off
 yabai -m config window_origin_display cursor
@@ -37,9 +37,7 @@ app_titles+="|QuickTime Player)"
 yabai -m rule --add title="${app_titles}" manage=off
 
 app_names="^(Calculator|Authy Desktop|Postgres|VLC|System Preferences"
-app_names+="|AppCleaner|1Password|WireGuard|System Settings|Tailscale"
-app_names+="|Logi Options|JetBrains Toolbox|Contexts|JetBrains Gateway"
-app_names+="|Logi Options\+|SteelSeries GG Client|Stats)$"
+app_names+="|AppCleaner|System Settings"
 yabai -m rule --add app="${app_names}" manage=off
 
 # Only used when SIP is enabled. This is a in-house replacement for
@@ -53,10 +51,6 @@ yabai -m signal --add label=stack_same_name_applications event=window_created \
     action="$HOME/.config/yabai/stack_same_name_applications.sh"
 
 yabai -m signal --add event=window_created action="$HOME/.config/yabai/float_small_windows.sh"
-
-# sketchybar specific events
-yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
-yabai -m signal --add event=space_changed action="sketchybar --trigger windows_on_spaces"
 
 # app specific rules
 yabai -m rule --add label=vs_code_space_two app='Code' space='2'

@@ -1,10 +1,6 @@
 default_roles:
-  - fzf
-  - git
-  - lazygit
   - lua
   - neovim
-  - npm
   - kitty
   - sketchybar
   - skhd
