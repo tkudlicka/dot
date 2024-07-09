@@ -13,15 +13,15 @@ vim.lsp.handlers["textDocument/definition"] = function(_, result)
 end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
-  vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
-    signs = {
-      severity_limit = "Error",
-    },
-    underline = {
-      severity_limit = "Warning",
-    },
-    virtual_text = true,
-  })
+    vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
+      signs = {
+        min = vim.diagnostic.severity.ERROR,
+      },
+      underline = {
+        min = vim.diagnostic.severity.WARNING,
+      },
+      virtual_text = true,
+    })
 
 vim.lsp.handlers["window/showMessage"] = require "tk.lsp.show_message"
 
@@ -53,4 +53,3 @@ end
 -- vim.lsp.codelens.display = require("gl.codelens").display
 
 return M
-

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$SENDER" = "space_windows_change" ]; then
-  args=(--animate sin 10)
+  args=(--animate sin )
 
   space="$(echo "$INFO" | jq -r '.space')"
   apps="$(echo "$INFO" | jq -r '.apps | keys[]')"

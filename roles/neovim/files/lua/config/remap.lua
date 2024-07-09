@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-vim.api.nvim_set_option("clipboard", "unnamed")
 -- Commenting
 -- Map save to Ctrl + S
 vim.keymap.set('', '<c-s>', ':w<CR>', { remap = true, silent = true })
@@ -46,7 +45,6 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/.local/bin/tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
