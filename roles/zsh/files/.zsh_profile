@@ -61,13 +61,5 @@ zle -N down-line-or-beginning-search
 bindkey "^[[A" up-line-or-beginning-search
 bindkey "^[[B" down-line-or-beginning-search
 
-function brew() {
-  command brew "$@"
-
-  if [[ $* =~ "upgrade" ]] || [[ $* =~ "update" ]] || [[ $* =~ "outdated" ]]; then
-    sketchybar --trigger brew_update
-  fi
-}
-
 export PATH=$PATH:$ZDOTDIR/git
 export PATH=$PATH:$HOME/go/bin

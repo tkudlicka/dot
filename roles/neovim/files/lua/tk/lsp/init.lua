@@ -98,7 +98,6 @@ local custom_attach = function(client, bufnr)
   end
 
   -- Attach any filetype specific options to the client
-  filetype_attach[filetype]()
 end
 
 local updated_capabilities = vim.lsp.protocol.make_client_capabilities()
