@@ -1,44 +1,12 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 local config = wezterm.config_builder()
+local theme = wezterm.plugin.require('https://github.com/neapsix/wezterm').main
 
 -- Support for undercurl, etc.
 config.term = 'wezterm'
+config.colors = theme.colors()
 
--- Color theme.
-local colors = {
-    bg = '#0E1419',
-    black = '#000000',
-    dark_lilac = '#6D5978',
-    lilac = '#BAA0E8',
-}
-config.color_scheme = 'Dracula (Official)'
-config.colors = {
-    background = colors.bg,
-    tab_bar = {
-        inactive_tab_edge = colors.black,
-        active_tab = {
-            bg_color = colors.lilac,
-            fg_color = colors.black,
-        },
-        inactive_tab = {
-            bg_color = colors.black,
-            fg_color = colors.dark_lilac,
-        },
-        inactive_tab_hover = {
-            bg_color = colors.black,
-            fg_color = colors.lilac,
-        },
-        new_tab = {
-            bg_color = colors.bg,
-            fg_color = colors.lilac,
-        },
-        new_tab_hover = {
-            bg_color = colors.lilac,
-            fg_color = colors.black,
-        },
-    },
-}
 
 -- Inactive panes.
 config.inactive_pane_hsb = {
