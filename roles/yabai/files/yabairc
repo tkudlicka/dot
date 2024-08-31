@@ -37,14 +37,18 @@ app_names+="|Logi Options|JetBrains Toolbox|Contexts|JetBrains Gateway"
 app_names+="|Logi Options\+|SteelSeries GG Client|Stats)$"
 yabai -m rule --add app="${app_names}" manage=off
 
+yabai -m rule --add app=WezTerm space=3
+yabai -m rule --add app=Zen space=2
+yabai -m rule --add app=Safari space=1
+yabai -m rule --add app=Firefox space=main
+yabai -m rule --add app="Google Chrome" space=main
+yabai -m rule --add app=Slack space=chat
+yabai -m rule --add app=TablePlus space=table
+yabai -m rule --add app=Mail space=mail
+
 # Only used when SIP is enabled. This is a in-house replacement for
 # `yabai -m window --focus recent`, used with the `switch_space.sh` script
-yabai -m signal --add label=space_changed event=space_changed \
-    action="$HOME/.config/yabai/save_recent_space.sh"
-
-# when a new window is created, stack it on top of the window of the same
-# application, if exists
-yabai -m signal --add label=stack_same_name_applications event=window_created \
+yabai -m signal --add label=space_changed event=space_changed indow_created \
     action="$HOME/.config/yabai/stack_same_name_applications.sh"
 
 yabai -m signal --add event=window_created action="$HOME/.config/yabai/float_small_windows.sh"
