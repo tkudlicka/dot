@@ -5,7 +5,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>org.sil.ukelele.keyboardlayout.test</string>
 	<key>CFBundleName</key>
-	<string>dvorak_test</string>
+	<string>dvorak</string>
 	<key>CFBundleVersion</key>
 	<string></string>
 </dict>
